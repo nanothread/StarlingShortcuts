@@ -4,6 +4,11 @@
 <dict>
 	<key>SchemeUserState</key>
 	<dict>
+		<key>Starling Intents.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>2</integer>
+		</dict>
 		<key>Starling Shortcuts.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
@@ -13,6 +18,11 @@
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
 		<key>3E33FB4C2522870500166987</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>3E67BB3625239B4A001A2392</key>
 		<dict>
 			<key>primary</key>
 			<true/>

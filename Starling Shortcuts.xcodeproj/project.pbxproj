@@ -11,8 +11,38 @@
 		3E33FB532522870500166987 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FB522522870500166987 /* ContentView.swift */; };
 		3E33FB552522870600166987 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E33FB542522870600166987 /* Assets.xcassets */; };
 		3E33FB582522870700166987 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E33FB572522870700166987 /* Preview Assets.xcassets */; };
-		3E33FB612522873C00166987 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FB602522873C00166987 /* Intents.intentdefinition */; };
+		3E33FB612522873C00166987 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FB602522873C00166987 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
+		3E67BB3A25239B4A001A2392 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB3925239B4A001A2392 /* IntentHandler.swift */; };
+		3E67BB3E25239B4A001A2392 /* Starling Intents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3E67BB3725239B4A001A2392 /* Starling Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		3E67BB4525239BB3001A2392 /* GetTransactionIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB4425239BB3001A2392 /* GetTransactionIntentHandler.swift */; };
+		3E67BB4C25239C5E001A2392 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FB602522873C00166987 /* Intents.intentdefinition */; };
+		3E67BB522523DF86001A2392 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB512523DF86001A2392 /* NetworkManager.swift */; };
+		3E67BB572523DFBB001A2392 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB512523DF86001A2392 /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		3E67BB3C25239B4A001A2392 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3E33FB452522870500166987 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3E67BB3625239B4A001A2392;
+			remoteInfo = "Starling Intents";
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		3E67BB2C25239AEA001A2392 /* Embed App Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				3E67BB3E25239B4A001A2392 /* Starling Intents.appex in Embed App Extensions */,
+			);
+			name = "Embed App Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		3E33FB4D2522870500166987 /* Starling Shortcuts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Starling Shortcuts.app"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -22,10 +52,22 @@
 		3E33FB572522870700166987 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3E33FB592522870700166987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E33FB602522873C00166987 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		3E67BB3725239B4A001A2392 /* Starling Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Starling Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
+		3E67BB3925239B4A001A2392 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
+		3E67BB3B25239B4A001A2392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		3E67BB4425239BB3001A2392 /* GetTransactionIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetTransactionIntentHandler.swift; sourceTree = "<group>"; };
+		3E67BB512523DF86001A2392 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		3E33FB4A2522870500166987 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		3E67BB3425239B4A001A2392 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -39,6 +81,7 @@
 			isa = PBXGroup;
 			children = (
 				3E33FB4F2522870500166987 /* Starling Shortcuts */,
+				3E67BB3825239B4A001A2392 /* Starling Intents */,
 				3E33FB4E2522870500166987 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -47,6 +90,7 @@
 			isa = PBXGroup;
 			children = (
 				3E33FB4D2522870500166987 /* Starling Shortcuts.app */,
+				3E67BB3725239B4A001A2392 /* Starling Intents.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -56,6 +100,7 @@
 			children = (
 				3E33FB502522870500166987 /* Starling_ShortcutsApp.swift */,
 				3E33FB522522870500166987 /* ContentView.swift */,
+				3E67BB512523DF86001A2392 /* NetworkManager.swift */,
 				3E33FB602522873C00166987 /* Intents.intentdefinition */,
 				3E33FB542522870600166987 /* Assets.xcassets */,
 				3E33FB592522870700166987 /* Info.plist */,
@@ -72,6 +117,16 @@
 			path = "Preview Content";
 			sourceTree = "<group>";
 		};
+		3E67BB3825239B4A001A2392 /* Starling Intents */ = {
+			isa = PBXGroup;
+			children = (
+				3E67BB3925239B4A001A2392 /* IntentHandler.swift */,
+				3E67BB4425239BB3001A2392 /* GetTransactionIntentHandler.swift */,
+				3E67BB3B25239B4A001A2392 /* Info.plist */,
+			);
+			path = "Starling Intents";
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -82,15 +137,34 @@
 				3E33FB492522870500166987 /* Sources */,
 				3E33FB4A2522870500166987 /* Frameworks */,
 				3E33FB4B2522870500166987 /* Resources */,
+				3E67BB2C25239AEA001A2392 /* Embed App Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				3E67BB3D25239B4A001A2392 /* PBXTargetDependency */,
 			);
 			name = "Starling Shortcuts";
 			productName = "Starling Shortcuts";
 			productReference = 3E33FB4D2522870500166987 /* Starling Shortcuts.app */;
 			productType = "com.apple.product-type.application";
+		};
+		3E67BB3625239B4A001A2392 /* Starling Intents */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3E67BB3F25239B4A001A2392 /* Build configuration list for PBXNativeTarget "Starling Intents" */;
+			buildPhases = (
+				3E67BB3325239B4A001A2392 /* Sources */,
+				3E67BB3425239B4A001A2392 /* Frameworks */,
+				3E67BB3525239B4A001A2392 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Starling Intents";
+			productName = "Starling Intents";
+			productReference = 3E67BB3725239B4A001A2392 /* Starling Intents.appex */;
+			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
 
@@ -102,6 +176,9 @@
 				LastUpgradeCheck = 1200;
 				TargetAttributes = {
 					3E33FB4C2522870500166987 = {
+						CreatedOnToolsVersion = 12.0;
+					};
+					3E67BB3625239B4A001A2392 = {
 						CreatedOnToolsVersion = 12.0;
 					};
 				};
@@ -120,6 +197,7 @@
 			projectRoot = "";
 			targets = (
 				3E33FB4C2522870500166987 /* Starling Shortcuts */,
+				3E67BB3625239B4A001A2392 /* Starling Intents */,
 			);
 		};
 /* End PBXProject section */
@@ -134,6 +212,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3E67BB3525239B4A001A2392 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -141,13 +226,33 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E67BB522523DF86001A2392 /* NetworkManager.swift in Sources */,
 				3E33FB612522873C00166987 /* Intents.intentdefinition in Sources */,
 				3E33FB532522870500166987 /* ContentView.swift in Sources */,
 				3E33FB512522870500166987 /* Starling_ShortcutsApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		3E67BB3325239B4A001A2392 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3E67BB572523DFBB001A2392 /* NetworkManager.swift in Sources */,
+				3E67BB4C25239C5E001A2392 /* Intents.intentdefinition in Sources */,
+				3E67BB4525239BB3001A2392 /* GetTransactionIntentHandler.swift in Sources */,
+				3E67BB3A25239B4A001A2392 /* IntentHandler.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		3E67BB3D25239B4A001A2392 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3E67BB3625239B4A001A2392 /* Starling Intents */;
+			targetProxy = 3E67BB3C25239B4A001A2392 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		3E33FB5A2522870700166987 /* Debug */ = {
@@ -269,6 +374,7 @@
 		3E33FB5D2522870700166987 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -291,6 +397,7 @@
 		3E33FB5E2522870700166987 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -305,6 +412,44 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "com.glenagon.Starling-Shortcuts";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		3E67BB4025239B4A001A2392 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EV37RCF267;
+				INFOPLIST_FILE = "Starling Intents/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.glenagon.Starling-Shortcuts.Starling-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		3E67BB4125239B4A001A2392 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = EV37RCF267;
+				INFOPLIST_FILE = "Starling Intents/Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "com.glenagon.Starling-Shortcuts.Starling-Intents";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -327,6 +472,15 @@
 			buildConfigurations = (
 				3E33FB5D2522870700166987 /* Debug */,
 				3E33FB5E2522870700166987 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3E67BB3F25239B4A001A2392 /* Build configuration list for PBXNativeTarget "Starling Intents" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3E67BB4025239B4A001A2392 /* Debug */,
+				3E67BB4125239B4A001A2392 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
