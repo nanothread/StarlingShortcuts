@@ -10,6 +10,8 @@ import Combine
 
 class StateManager: ObservableObject {
     @Published var accounts = [Account]()
+    @Published var latestTransaction: Transaction?
+    
     private var network = NetworkManager()
     private var cancellables = Set<AnyCancellable>()
     
@@ -27,6 +29,21 @@ class StateManager: ObservableObject {
             }
             .store(in: &cancellables)
     }
+    
+    func fetchLatestTransaction() {
+        network
+            .fetchAccounts()
+            .compactMap(\.first)
+            .print()
+            .flatMap(network.fetchLatestTransaction)
+            .print()
+            .catch { error -> Just<Transaction?> in
+                print("Failed to fetch latest transaction:", error)
+                return Just(nil)
+            }
+            .receive(on: DispatchQueue.main)
+            .assign(to: &$latestTransaction)
+    }
 }
 
 struct ContentView: View {
@@ -39,6 +56,20 @@ struct ContentView: View {
             } label: {
                 Text("Fetch Accounts")
             }
+            
+            Button {
+                state.fetchLatestTransaction()
+            } label: {
+                Text("Fetch Latest Transaction")
+            }
+            
+            Divider()
+            
+            if let transaction = state.latestTransaction {
+                Text(transaction.debugDescription)
+            }
+            
+            Divider()
             
             ForEach(state.accounts) { account in
                 Text(account.name)

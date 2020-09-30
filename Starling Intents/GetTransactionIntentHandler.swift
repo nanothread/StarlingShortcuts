@@ -27,7 +27,14 @@ class GetTransactionIntentHandler: NSObject, GetTransactionIntentHandling {
     }
     
     func handle(intent: GetTransactionIntent, completion: @escaping (GetTransactionIntentResponse) -> Void) {
-        completion(.init(code: .success, userActivity: nil))
+        guard let account = intent.account else {
+            completion(GetTransactionIntentResponse(code: .failure, userActivity: nil))
+            return
+        }
+        
+        
+//        let response = GetTransactionIntentResponse(code: .success, userActivity: nil)
+//        response.transaction
     }
     
     func resolveAccount(for intent: GetTransactionIntent, with completion: @escaping (SCAccountResolutionResult) -> Void) {
@@ -55,6 +62,7 @@ class GetTransactionIntentHandler: NSObject, GetTransactionIntentHandling {
         getAccounts()
             .sink { result in
                 if case .failure(let error) = result {
+                    print("Failed to fetch accounts from provideAccountOptionsCollection:", error)
                     completion(nil, error)
                 }
             } receiveValue: { accounts in

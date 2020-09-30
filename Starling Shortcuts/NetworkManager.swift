@@ -11,10 +11,29 @@ import Combine
 struct Account: Codable {
     var accountUid: String
     var name: String
+    var defaultCategory: String
 }
 
 extension Account: Identifiable {
     var id: String { accountUid }
+}
+
+struct Transaction: Codable, CustomDebugStringConvertible {
+    var amount: CurrencyAndAmount
+    var counterPartyName: String
+    
+    var debugDescription: String {
+        "\(amount) with \(counterPartyName)"
+    }
+}
+
+struct CurrencyAndAmount: Codable, CustomDebugStringConvertible {
+    var currency: String
+    var minorUnits: Int
+    
+    var debugDescription: String {
+        String(format: "%.2f \(currency)", Double(minorUnits) / 100)
+    }
 }
 
 // TODO get all accounts (to provide a list in the shortcut)
@@ -28,8 +47,11 @@ class Starling {
         self.accessToken = accessToken
     }
     
-    private func request(endpoint: String, method: String = "GET") -> URLRequest {
-        var request = URLRequest(url: URL(string: root + endpoint)!)
+    private func request(endpoint: String, method: String = "GET", query: [String: String] = [:]) -> URLRequest {
+        var url = URLComponents(string: root + endpoint)!
+        url.queryItems = query.map(URLQueryItem.init)
+        
+        var request = URLRequest(url: url.url!)
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = method
         return request
@@ -39,10 +61,20 @@ class Starling {
         URLSession.shared
             .dataTaskPublisher(for: request(endpoint: "/accounts"))
     }
+    
+    func fetchTransactions(accountUid: String, categoryUid: String, since: Date) -> URLSession.DataTaskPublisher {
+        URLSession.shared
+            .dataTaskPublisher(for: request(endpoint: "/feed/account/\(accountUid)/category/\(categoryUid)",
+                                            query: ["changesSince": ISO8601DateFormatter().string(from: since)]))
+    }
 }
 
 class NetworkManager: ObservableObject {
     let starling = Starling(accessToken: STARLING_ACCESS_TOKEN)
+    
+    enum NetworkError: Error {
+        case accountNotFound
+    }
     
     func fetchAccounts() -> AnyPublisher<[Account], Error> {
         starling
@@ -57,9 +89,26 @@ class NetworkManager: ObservableObject {
             }
             .eraseToAnyPublisher()
     }
+    
+    func fetchLatestTransaction(from account: Account) -> AnyPublisher<Transaction?, Error> {
+        // TODO: Currently only works for transactions made in the last 7 days
+        starling
+            .fetchTransactions(
+                accountUid: account.accountUid,
+                categoryUid: account.defaultCategory,
+                since: Calendar.current.date(byAdding: DateComponents(day: -7), to: Date())!
+            )
+            .tryMap { data, _ in
+                struct DTO: Codable {
+                    var feedItems: [Transaction]
+                }
+
+                let dto = try JSONDecoder().decode(DTO.self, from: data)
+                return dto.feedItems.first
+            }
+            .eraseToAnyPublisher()
+    }
 }
 
 
-let STARLING_ACCESS_TOKEN = """
-eyJhbGciOiJQUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAH1Ty46cMBD8lRXn9QrzHm655QfyAU27PWMN2Mg2k6yi_HsM5jFMVrlRVd3larf5nSjnkjaBUTFBg_lwHmyv9LUDff9AMyTviZu6UEFQcg5NzirZdayQRcOarE4ZliApLbO64hSK6deYtLxKeVGXdXV5TxT4SOTNJZ8JQDST9t9NL8j-UCJ4i5KKhmPJ6iZFVuRpFbwrznLR5Q1doANRBW9v7qRjR8E5QX7JWMmpCB1ZwZqLyNiFY8Yb2SBlInSEsb4hknOxSwrCtMwbJqkJ59RQsi5HZEh509WlTFHweWA0I82XEpOy2xKVaRiotQTi7UXwn-OLoARpr6Qie-Z75fyJWYEQNoRsSSi_g6h4D3gbaK888E-rPL3B5G_GKhdWxpQW6qHEBH0s7qAHjWs0BCsYGu2t6eNBM7NqRktlB_DKaGYkk5MWbpfcfvoG4tE4OW-GbUQaQK3GA2gBnlpBPYW6DS5lA9g7-TntaEmSpRDQ_U-KZ0Vt7AEpjOnpapewz43_imsrWbzBNsJAHkIaaDHARV3xknyET6JNimAdIoKjiKkBrutMUds-WTf193bbCx3UYRvx4RzxbtAbDCt8Kl8IZuZdvrJrlzVS9VuomPJELVWWkNToT8CdpXhlDh5hDY5dzZHjxK3RT9zi88wwb0G7sMivLA7xC69DjKY-vKD5XRgrntzO7GZzZrd-T_M_w9A9XqlRyJWaOoc2XML-rpYUgAux3OkzMVckf_4C-1rBjkAFAAA.gP_I64a8q7Soof_qfKylhF-Q5atamPuQ3pxMcgR6NwQdm4R3H0j4_KMxMzurYo6GuiRDoiZlQ4XeHjdSvyy84yLwPon-0A7bmDqmdHPtnmvgiAk57kcBMtLH5jMnpyI1aLHMc4Cn8LyqlZdZqNLIuNFEoIN8DGgBWLIM47piu75F1nR_WIuHx_NKizKTuABAChOoghzRzQPNUVj6onoaOHPdsapKteem0h9XPG0I5yK5ojJN4ATTpDxD73i6IeAcxuAQC2maOaX2W_lc3xkSNnm2mYwOZWYe5aN4rZY_TL-IfAphDEDSeV9x-tGBS10q8IFNOLLvjf6_WtcBJbxwJ-LnOb1042Kkg2kgnWX83-25hKxVq1ReM0XMMvrPSWBXE6ytKffQyLSfEDPa7NSZFRzkRcuB_-9H3m6ZMmcF_iTR7FN_13EKJFLBqfUv7agFfS3K_oJHMXhbS3FTJ4bsMKzr8PfDDDxW6F-oTuR28f0wJBR4TNHXQrpyaRSx3Ji96-d_bPY5GEqwFkfNfYoIPXZookz7MkMZ-qPDChfMVKvgAJPSdTfZC1s3dgsZoyQnSLTRncrFKDNg4pM94HYFjcdQ1JCGgcwrh3dBgNC1mQu0f9HlZQ6ryp4luxPJPgGyZcoLqmnC4Ns7i1cVoNOdPerR1T2b8rIcyFkRxVDzbnY
-"""
+let STARLING_ACCESS_TOKEN = "eyJhbGciOiJQUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAH1Ty5KbMBD8lS3OO1tgnuaWW34gHzCMRrbKIFGScLKVyr9HIDDG2cqN7p5p9WjE70Q5l7QJjgoED-bDebS90pcO9e2DzJC8J27qQgVjmWXY5FDJroNCFg00pzoFKlFyWp7qKuNQzL_GpM2qNCvL86nK3xOFPhJFfWpmAonMpP130wu2P5QI3qLkosmohLpJCYo8rYJ3lUEuurzhM3YoquDtzY117CiqhgVRBecaUyiwLgGbtIQz5SKTXVWeRRY6wljfiNi52CUFU1rmDUhuwjk1ltDlRECcN11dypSWLkdm5PlSYlK4LlFB48CtZRRvL4L_HF8EJVh7JRXbI98r5w_MCoSwIWTLQvkHiIr3SNeBH5U7_mmV5zec_NVY5cLKQGmh7kpM2MfiDnvUtEYjtALIaG9NHw-amVUzWio7oFdGg5EgJy3cQ3KP0zcQj6bJeTNsI_KAajUeUAv03AruOdRtcCkb0N7Yz2lHy5Ith4Duf1I8K2pjj8RhTM8Xu4R9bvxXXFvZ0hW3EQb2GNJgSwEu6oqX5CN-Mm9SBOsQEexFoAa8rDNFbfuEbupv7bYX3qndNuLdOeKHQW8orPCpfCHAzLt8Zdcua6Tqt1Ax5YFaqiwTq9EfgDtK8coc3sMaHFzMnuPArdEP3OLzzIC3qF1Y5FcWu_iF1y5GUx9e0PwujBVPbkd2szmyW7_n-Z8BcvdXahRypabOkQ2X8HhXSwqkhVju9JmYK5I_fwGFR2CqQAUAAA.TuhMHAGQHTESgOTMKOGL7grPGzMRmQbNuAOBhEVtC4Z7dEg59V09A1ls8w59mXHw0V1zB3FqGR5eY4UDQbu3z3s_TTrXQybtwp_ouT3x1_biOF39sO4YnQUnaMyGwQTG2NCr2p6LAsvg7sza8uuN-JBGo-gdf8x-rOxDAN4Si_YRbDgZHUl79vUFDtX7ZAsAic4aJ_BIniQDGL016SP-Djnnv_GiqUfM7PZ-QIrxRSh_89bM6Rmv87eUExrcrIpx0f5HwG8cCHt_i68Qla0HndhlxttlWEpHwqiwPz9FSJ_xi4DLj9XXyYvr-B9CKsKX_nGbEJnYh4E4RGNL1__DK7UIuGyVU_3K_9h3jQ725otfHQb6D2RPmQa85OQSIhacjEUOOYqdN2ECJIjjgTnaDdJRlFKB95GF0h2eWYnh3R5dgB__IJhiXHSQ6ZpEoDyehsfHFfxGHC0qHzeIyVlZnKIlBwjQWWf1818_LDGmDX9odFZEM7ZSavD5zdItW-eBrYGnGuUklDrb9e9Q9Xe2SNS51ueJ4kpktqkigZKuVrqp75lpDHgDt42mF5TSV1mHhvFlySNSdZRhQ8ckDIMqMT7wWiFdotEfsabIjQ5HtLR6t3l9mZkrP3G_0fjoJVIrptwomSQx1uWcD8BUvBp9rEJTyEGl0-WskF6qykIHSi8"
