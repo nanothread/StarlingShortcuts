@@ -28,9 +28,12 @@
 			<array>
 				<string>GetTransactionIntent</string>
 			</array>
+			<key>IntentsRestrictedWhileProtectedDataUnavailable</key>
+			<array/>
 			<key>IntentsSupported</key>
 			<array>
 				<string>GetTransactionIntent</string>
+				<string>SetCardIntent</string>
 			</array>
 		</dict>
 		<key>NSExtensionPointIdentifier</key>

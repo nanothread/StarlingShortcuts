@@ -35,6 +35,9 @@ class IntentHandler: INExtension {
         if intent is GetTransactionIntent {
             return GetTransactionIntentHandler()
         }
+        if intent is SetCardIntent {
+            return SetCardIntentHandler()
+        }
         
         return self
     }

@@ -8,72 +8,6 @@
 import Foundation
 import Combine
 
-struct Account: Codable {
-    var accountUid: String
-    var name: String
-    var defaultCategory: String
-}
-
-extension Account: Identifiable {
-    var id: String { accountUid }
-}
-
-struct Transaction: Codable, CustomDebugStringConvertible {
-    var feedItemUid: String
-    var amount: CurrencyAndAmount
-    var counterPartyName: String
-    
-    var debugDescription: String {
-        "\(amount) with \(counterPartyName)"
-    }
-}
-
-extension Transaction: Identifiable {
-    var id: String { feedItemUid }
-}
-
-struct CurrencyAndAmount: Codable, CustomDebugStringConvertible {
-    var currency: String
-    var minorUnits: Int
-    
-    var debugDescription: String {
-        String(format: "%.2f \(currency)", Double(minorUnits) / 100)
-    }
-}
-
-// TODO get all accounts (to provide a list in the shortcut)
-// TODO query latest transaction given a particular account
-
-class Starling {
-    private let root = "https://api-sandbox.starlingbank.com/api/v2"
-    var accessToken: String
-    
-    init(accessToken: String) {
-        self.accessToken = accessToken
-    }
-    
-    private func request(endpoint: String, method: String = "GET", query: [String: String] = [:]) -> URLRequest {
-        var url = URLComponents(string: root + endpoint)!
-        url.queryItems = query.map(URLQueryItem.init)
-        
-        var request = URLRequest(url: url.url!)
-        request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
-        request.httpMethod = method
-        return request
-    }
-    
-    func fetchAccounts() -> URLSession.DataTaskPublisher {
-        URLSession.shared
-            .dataTaskPublisher(for: request(endpoint: "/accounts"))
-    }
-    
-    func fetchTransactions(accountUid: String, categoryUid: String, since: Date) -> URLSession.DataTaskPublisher {
-        URLSession.shared
-            .dataTaskPublisher(for: request(endpoint: "/feed/account/\(accountUid)/category/\(categoryUid)",
-                                            query: ["changesSince": ISO8601DateFormatter().string(from: since)]))
-    }
-}
-
 class NetworkManager: ObservableObject {
     let starling = Starling(accessToken: STARLING_ACCESS_TOKEN)
     
@@ -110,6 +44,20 @@ class NetworkManager: ObservableObject {
 
                 let dto = try JSONDecoder().decode(DTO.self, from: data)
                 return dto.feedItems.first
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    func fetchCards() -> AnyPublisher<[Card], Error> {
+        starling
+            .fetchCards()
+            .tryMap { data, _ in
+                struct DTO: Codable {
+                    var cards: [Card]
+                }
+
+                let dto = try JSONDecoder().decode(DTO.self, from: data)
+                return dto.cards
             }
             .eraseToAnyPublisher()
     }
