@@ -11,7 +11,15 @@ import Combine
 
 extension SCAccount {
     convenience init(_ account: Account) {
-        self.init(identifier: account.accountUid, display: account.name)
+        self.init(identifier: account.id, display: account.name)
+    }
+}
+
+extension SCTransaction {
+    convenience init(_ transaction: Transaction) {
+        self.init(identifier: transaction.id, display: transaction.debugDescription)
+        self.merchant = transaction.counterPartyName
+        self.amount = INCurrencyAmount(amount: NSDecimalNumber(floatLiteral: Double(transaction.amount.minorUnits) / 100), currencyCode: transaction.amount.currency)
     }
 }
 
@@ -32,9 +40,24 @@ class GetTransactionIntentHandler: NSObject, GetTransactionIntentHandling {
             return
         }
         
-        
-//        let response = GetTransactionIntentResponse(code: .success, userActivity: nil)
-//        response.transaction
+        network
+            .fetchAccounts()
+            .compactMap { $0.first(where: { $0.accountUid == account.identifier })}
+            .flatMap(network.fetchLatestTransaction)
+            .sink { result in
+                if case .failure(let error) = result {
+                    print("Failed to fetch latest transaction:", error)
+                    completion(.init(code: .failure, userActivity: nil))
+                }
+            } receiveValue: { transaction in
+                guard let transaction = transaction else {
+                    completion(.init(code: .failure, userActivity: nil))
+                    return
+                }
+                
+                completion(.success(transaction: SCTransaction(transaction)))
+            }
+            .store(in: &cancellables)
     }
     
     func resolveAccount(for intent: GetTransactionIntent, with completion: @escaping (SCAccountResolutionResult) -> Void) {

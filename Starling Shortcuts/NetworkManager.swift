@@ -19,12 +19,17 @@ extension Account: Identifiable {
 }
 
 struct Transaction: Codable, CustomDebugStringConvertible {
+    var feedItemUid: String
     var amount: CurrencyAndAmount
     var counterPartyName: String
     
     var debugDescription: String {
         "\(amount) with \(counterPartyName)"
     }
+}
+
+extension Transaction: Identifiable {
+    var id: String { feedItemUid }
 }
 
 struct CurrencyAndAmount: Codable, CustomDebugStringConvertible {
