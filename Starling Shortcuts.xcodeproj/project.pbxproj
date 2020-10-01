@@ -29,6 +29,8 @@
 		3E67BB8D252531E8001A2392 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB7F2525300E001A2392 /* Card.swift */; };
 		3E67BB8E252531E8001A2392 /* CurrencyAndAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */; };
 		3E67BB91252531F5001A2392 /* Starling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB87252530CB001A2392 /* Starling.swift */; };
+		3E67BB9B252631A6001A2392 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB9A252631A6001A2392 /* Statement.swift */; };
+		3E67BB9F252633DC001A2392 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB9E252633DC001A2392 /* PDFView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,8 @@
 		3E67BB7F2525300E001A2392 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAndAmount.swift; sourceTree = "<group>"; };
 		3E67BB87252530CB001A2392 /* Starling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starling.swift; sourceTree = "<group>"; };
+		3E67BB9A252631A6001A2392 /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
+		3E67BB9E252633DC001A2392 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -117,6 +121,7 @@
 			children = (
 				3E33FB502522870500166987 /* Starling_ShortcutsApp.swift */,
 				3E33FB522522870500166987 /* ContentView.swift */,
+				3E67BB9E252633DC001A2392 /* PDFView.swift */,
 				3E67BB512523DF86001A2392 /* NetworkManager.swift */,
 				3E67BB87252530CB001A2392 /* Starling.swift */,
 				3E33FB602522873C00166987 /* Intents.intentdefinition */,
@@ -154,6 +159,7 @@
 				3E67BB7B2525300A001A2392 /* Transaction.swift */,
 				3E67BB7F2525300E001A2392 /* Card.swift */,
 				3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */,
+				3E67BB9A252631A6001A2392 /* Statement.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -266,6 +272,8 @@
 				3E33FB612522873C00166987 /* Intents.intentdefinition in Sources */,
 				3E33FB532522870500166987 /* ContentView.swift in Sources */,
 				3E33FB512522870500166987 /* Starling_ShortcutsApp.swift in Sources */,
+				3E67BB9F252633DC001A2392 /* PDFView.swift in Sources */,
+				3E67BB9B252631A6001A2392 /* Statement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

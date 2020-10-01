@@ -12,6 +12,7 @@ class Starling {
     typealias APIPublisher = URLSession.DataTaskPublisher
     
     private let root = "https://api-sandbox.starlingbank.com/api/v2"
+    private let dateFormatter = ISO8601DateFormatter()
     var accessToken: String
     
     struct APIError: Codable, Swift.Error, LocalizedError {
@@ -34,14 +35,15 @@ class Starling {
         endpoint: String,
         method: String = "GET",
         query: [String: String]? = nil,
-        body: [String: Any]? = nil
+        body: [String: Any]? = nil,
+        accept: String = "application/json"
     ) -> URLRequest
     {
         var url = URLComponents(string: root + endpoint)!
         if let query = query {
             url.queryItems = query.map(URLQueryItem.init)
         }
-        
+                
         var request = URLRequest(url: url.url!)
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = method
@@ -51,7 +53,7 @@ class Starling {
             request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
-        request.setValue("application/json", forHTTPHeaderField: "Accept")
+        request.setValue(accept, forHTTPHeaderField: "Accept")
         
         return request
     }
@@ -64,7 +66,7 @@ class Starling {
     func fetchTransactions(accountUid: String, categoryUid: String, since: Date) -> APIPublisher {
         URLSession.shared
             .dataTaskPublisher(for: request(endpoint: "/feed/account/\(accountUid)/category/\(categoryUid)",
-                                            query: ["changesSince": ISO8601DateFormatter().string(from: since)]))
+                                            query: ["changesSince": dateFormatter.string(from: since)]))
     }
     
     func fetchCards() -> APIPublisher {
@@ -77,5 +79,26 @@ class Starling {
             .dataTaskPublisher(for: request(endpoint: "/cards/\(uid)/controls/enabled",
                                             method: "PUT",
                                             body: ["enabled": enabled]))
+    }
+    
+    enum StatementFormat: String {
+        case csv = "text/csv"
+        case pdf = "application/pdf"
+    }
+    
+    func fetchStatementForMonth(for accountUid: String, month: Int, year: Int, format: StatementFormat) -> APIPublisher {
+        URLSession.shared
+            .dataTaskPublisher(for: request(endpoint: "/accounts/\(accountUid)/statement/download",
+                                            query: ["yearMonth": "\(year)-\(String(format: "%02d", month))"],
+                                            accept: format.rawValue))
+    }
+    func fetchStatementForDateRange(for accountUid: String, start: Date, end: Date, format: StatementFormat) -> APIPublisher {
+        URLSession.shared
+            .dataTaskPublisher(for: request(endpoint: "/accounts/\(accountUid)/statement/downloadForDateRange",
+                                            query: [
+                                                "start": dateFormatter.string(from: start),
+                                                "end": dateFormatter.string(from: end)
+                                            ],
+                                            accept: format.rawValue))
     }
 }

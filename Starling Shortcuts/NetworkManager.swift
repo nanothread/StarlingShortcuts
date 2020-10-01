@@ -72,7 +72,29 @@ class NetworkManager: ObservableObject {
             .mapError { $0 }
             .eraseToAnyPublisher()
     }
+    
+    enum StatementTarget {
+        case month(_ month: Int, year: Int)
+        case dateRange(from: Date, to: Date)
+    }
+    
+    func fetchStatement(for accountUid: String, target: StatementTarget, format: Starling.StatementFormat) -> AnyPublisher<Data, Error> {
+        switch target {
+        case .month(let month, year: let year):
+            return starling
+                .fetchStatementForMonth(for: accountUid, month: month, year: year, format: format)
+                .map { data, _ in data }
+                .mapError { $0 }
+                .eraseToAnyPublisher()
+        case .dateRange(let start, let end):
+            return starling
+                .fetchStatementForDateRange(for: accountUid, start: start, end: end, format: format)
+                .map { data, _ in data }
+                .mapError { $0 }
+                .eraseToAnyPublisher()
+        }
+    }
 }
 
 
-let STARLING_ACCESS_TOKEN = "eyJhbGciOiJQUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAH1Ty5KbMBD8lS3OO1tgnuaWW34gHzCMRrbKIFGScLKVyr9HIDDG2cqN7p5p9WjE70Q5l7QJjgoED-bDebS90pcO9e2DzJC8J27qQgVjmWXY5FDJroNCFg00pzoFKlFyWp7qKuNQzL_GpM2qNCvL86nK3xOFPhJFfWpmAonMpP130wu2P5QI3qLkosmohLpJCYo8rYJ3lUEuurzhM3YoquDtzY117CiqhgVRBecaUyiwLgGbtIQz5SKTXVWeRRY6wljfiNi52CUFU1rmDUhuwjk1ltDlRECcN11dypSWLkdm5PlSYlK4LlFB48CtZRRvL4L_HF8EJVh7JRXbI98r5w_MCoSwIWTLQvkHiIr3SNeBH5U7_mmV5zec_NVY5cLKQGmh7kpM2MfiDnvUtEYjtALIaG9NHw-amVUzWio7oFdGg5EgJy3cQ3KP0zcQj6bJeTNsI_KAajUeUAv03AruOdRtcCkb0N7Yz2lHy5Ith4Duf1I8K2pjj8RhTM8Xu4R9bvxXXFvZ0hW3EQb2GNJgSwEu6oqX5CN-Mm9SBOsQEexFoAa8rDNFbfuEbupv7bYX3qndNuLdOeKHQW8orPCpfCHAzLt8Zdcua6Tqt1Ax5YFaqiwTq9EfgDtK8coc3sMaHFzMnuPArdEP3OLzzIC3qF1Y5FcWu_iF1y5GUx9e0PwujBVPbkd2szmyW7_n-Z8BcvdXahRypabOkQ2X8HhXSwqkhVju9JmYK5I_fwGFR2CqQAUAAA.TuhMHAGQHTESgOTMKOGL7grPGzMRmQbNuAOBhEVtC4Z7dEg59V09A1ls8w59mXHw0V1zB3FqGR5eY4UDQbu3z3s_TTrXQybtwp_ouT3x1_biOF39sO4YnQUnaMyGwQTG2NCr2p6LAsvg7sza8uuN-JBGo-gdf8x-rOxDAN4Si_YRbDgZHUl79vUFDtX7ZAsAic4aJ_BIniQDGL016SP-Djnnv_GiqUfM7PZ-QIrxRSh_89bM6Rmv87eUExrcrIpx0f5HwG8cCHt_i68Qla0HndhlxttlWEpHwqiwPz9FSJ_xi4DLj9XXyYvr-B9CKsKX_nGbEJnYh4E4RGNL1__DK7UIuGyVU_3K_9h3jQ725otfHQb6D2RPmQa85OQSIhacjEUOOYqdN2ECJIjjgTnaDdJRlFKB95GF0h2eWYnh3R5dgB__IJhiXHSQ6ZpEoDyehsfHFfxGHC0qHzeIyVlZnKIlBwjQWWf1818_LDGmDX9odFZEM7ZSavD5zdItW-eBrYGnGuUklDrb9e9Q9Xe2SNS51ueJ4kpktqkigZKuVrqp75lpDHgDt42mF5TSV1mHhvFlySNSdZRhQ8ckDIMqMT7wWiFdotEfsabIjQ5HtLR6t3l9mZkrP3G_0fjoJVIrptwomSQx1uWcD8BUvBp9rEJTyEGl0-WskF6qykIHSi8"
+let STARLING_ACCESS_TOKEN = "eyJhbGciOiJQUzI1NiIsInppcCI6IkdaSVAifQ.H4sIAAAAAAAAAH1Ty5KbMBD8lS3OO1tgnuaWW34gHzCMRrbKIFGScLKVyr9HIDDG2cqN7p5p9WjE70Q5l7QJjgoED-bDebS90pcO9e2DzJC8J27qQgVjmWXY5FDJroNCFg00pzoFKlFyWp7qKuNQzL_GpM2qNKvqssnK90Shj0TZnIuZQCIzaf_d9ILtDyWCtyi5aDIqoW5SgiJPq-BdZZCLLm_4jB2KKnh7c2MdOwo-hQhlDhIpg-LcnaHhtIaTCH0yOzVNcQodYaxvROxc7JKCKS3zBiQ34ZwaS-hyIiDOm64uZUoimwcmM_J8KTEpXJeooHHg1jKKtxfBf44vghKsvZKK7ZHvlfMHZgVC2BCyZaH8A0TFe6TrwI_KHf-0yvMbTv5qrHJhZaC0UHclJuxjcYc9alqjEVoBZLS3po8HzcyqGS2VHdAro8FIkJMW7iG5x-kbiEfT5LwZthF5QLUaD6gFem4F9xzqNriUDWhv7Oe0o2XJlkNA9z8pnhW1sUfiMKbni13CPjf-K66tbOmK2wgDewxpsKUAF3XFS_IRP5k3KYJ1iAj2IlADXtaZorZ9Qjf1t3bbC-_Ubhvx7hzxw6A3FFb4VL4QYOZdvrJrlzVS9VuomPJALVWWidXoD8AdpXhlDu9hDQ4uZs9x4NboB27xeWbAW9QuLPIri138wmsXo6kPL2h-F8aKJ7cju9kc2a3f8_zPALn7KzUKuVJT58iGS3i8qyUF0kIsd_pMzBXJn79dmdiaQAUAAA.b_Ee4B5Fv20MCL-Ldlo33TyU6QPp2IRA0RAGIJ-iJkzBJ4vIHCq7HktBxeCT88CxRfQzq5rlACJpzZY5lghCPJ6tqZRnAlBZoSBCxC3O0CvjJsEMAXywbVe0XPJe1frMBussZ05WCSUdq1N9-9RvHgCv7lNB6ZE82qk2YA8Auouim_8dR0Q6sIE_H4rawecr-lTGZ1L8Y9WlAGOe3pjmQ93sP9s9mNlyLo0LV0PyrINCZ8JUF4byFFUc8Wf66YiRShTU9bz8PIRsgLegp0EWksO2Tq8IzzT7V08kSp7QQHnBJhimb8qj-CmhFqOxLk_wH0JwdcVhUwdoxTZudEht9_5VPX3WrjiKCO5nqVnBv8bJL5ZQrux5Moe8u6d6cHVUCctovxe8pGwXHrGcADLZ3sr8-5iGDiM9uWDCvDkI7FJdPv6etLPxDE9F79RVxmDPduGx1lu-ivMyUY97_0-VtKqWVqALBqjSi6KPyooto36xpYMeMVOYsqviXr__-gMd4nEG_V8nb9t9IegGgdxvA5ittY9YhoZo8EgHCkVdiNF3APBiWZ9fXUi-ssdD5O7S3Jpjwx_ryTx08xmqEib18eWe-UKahC2zc8WNODxU8LKTjp95pMxr2AXykaNo4zZSIATDBty95h6QCGeVFzW4XqfdD-WD50b6gl9zupbCkzg"

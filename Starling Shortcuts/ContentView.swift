@@ -13,6 +13,8 @@ class StateManager: ObservableObject {
     @Published var latestTransaction: Transaction?
     @Published var cards = [Card]()
     
+    @Published var statementPDF: Data?
+    
     private(set) var network = NetworkManager()
     var cancellables = Set<AnyCancellable>()
     
@@ -58,6 +60,26 @@ class StateManager: ObservableObject {
                 }
             } receiveValue: { cards in
                 self.cards = cards
+            }
+            .store(in: &cancellables)
+    }
+    
+    func fetchStatementPDF() {
+        guard let account = accounts.first else { return }
+        network
+            .fetchStatement(for: account.accountUid,
+                            target: .month(9, year: 2020),
+                            format: .pdf)
+            .print("Statement PDF - ")
+            .receive(on: DispatchQueue.main)
+            .sink { result in
+                if case .failure(let error) = result {
+                    print("Failed to fetch statement pdf:", error)
+                } else {
+                    print("Finished fetching PDF")
+                }
+            } receiveValue: { data in
+                self.statementPDF = data
             }
             .store(in: &cancellables)
     }
@@ -126,9 +148,37 @@ struct ContentView: View {
                         }
                     }
                 }
+                
+                Section(header: Text("Statement")) {
+                    Button {
+                        state.fetchStatementPDF()
+                    } label: {
+                        Text("Fetch PDF")
+                    }
+                    
+                    Button {
+                        
+                    } label: {
+                        Text("Fetch CSV")
+                    }
+                }
             }
             .listStyle(InsetGroupedListStyle())
             .navigationTitle("Starling Shortcuts")
+            .sheet(
+                isPresented: Binding<Bool>(
+                    get: { state.statementPDF != nil },
+                    set: { _ in state.statementPDF = nil }
+                ),
+                onDismiss: {
+                    state.statementPDF = nil
+                },
+                content: {
+                    if let data = state.statementPDF {
+                        PDFView(pdfData: data)
+                    }
+                }
+            )
         }
     }
 }

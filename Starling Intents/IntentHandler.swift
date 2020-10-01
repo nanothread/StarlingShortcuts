@@ -8,12 +8,11 @@
 import Intents
 
 /* Intent Ideas
-    Lock/Unlock Card (there may be multiple cards)
-    Submit receipt for latest outgoing transaction
-    Get next scheduled recurring transaction (may be a recurring payment or a standing order)
     Download statement for account
         - For certain month
         - For certain date range
+    Submit receipt for latest outgoing transaction
+    Get next scheduled recurring transaction (may be a recurring payment or a standing order)
  
     Get spending insights
         - Grouped by merchant
@@ -29,9 +28,6 @@ import Intents
 class IntentHandler: INExtension {
     
     override func handler(for intent: INIntent) -> Any {
-        // This is the default implementation. If you want different objects to handle different intents,
-        // you can override this and return the handler you want for that particular intent.
-        
         if intent is GetTransactionIntent {
             return GetTransactionIntentHandler()
         }
