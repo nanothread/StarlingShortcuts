@@ -14,6 +14,18 @@ class Starling {
     private let root = "https://api-sandbox.starlingbank.com/api/v2"
     var accessToken: String
     
+    struct APIError: Codable, Swift.Error, LocalizedError {
+        struct Error: Codable {
+            var message: String
+        }
+        
+        var errors: [Error]
+        
+        var errorDescription: String? {
+            errors.reduce("Starling API Error:") { $0 + "\n\($1)" }
+        }
+    }
+    
     init(accessToken: String) {
         self.accessToken = accessToken
     }
@@ -21,20 +33,25 @@ class Starling {
     private func request(
         endpoint: String,
         method: String = "GET",
-        query: [String: String] = [:],
+        query: [String: String]? = nil,
         body: [String: Any]? = nil
     ) -> URLRequest
     {
         var url = URLComponents(string: root + endpoint)!
-        url.queryItems = query.map(URLQueryItem.init)
+        if let query = query {
+            url.queryItems = query.map(URLQueryItem.init)
+        }
         
         var request = URLRequest(url: url.url!)
         request.addValue("Bearer \(accessToken)", forHTTPHeaderField: "Authorization")
         request.httpMethod = method
         
         if let body = body {
-            request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: .fragmentsAllowed)
+            request.httpBody = try? JSONSerialization.data(withJSONObject: body, options: [])
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
+        
+        request.setValue("application/json", forHTTPHeaderField: "Accept")
         
         return request
     }

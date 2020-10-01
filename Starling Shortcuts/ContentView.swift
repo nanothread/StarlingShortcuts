@@ -13,8 +13,8 @@ class StateManager: ObservableObject {
     @Published var latestTransaction: Transaction?
     @Published var cards = [Card]()
     
-    private var network = NetworkManager()
-    private var cancellables = Set<AnyCancellable>()
+    private(set) var network = NetworkManager()
+    var cancellables = Set<AnyCancellable>()
     
     func fetchAccounts() {
         network
@@ -36,9 +36,8 @@ class StateManager: ObservableObject {
         network
             .fetchAccounts()
             .compactMap(\.first)
-            .print()
             .flatMap(network.fetchLatestTransaction)
-            .print()
+            .print("LatestTransaction - ")
             .catch { error -> Just<Transaction?> in
                 print("Failed to fetch latest transaction:", error)
                 return Just(nil)
@@ -80,7 +79,7 @@ struct ContentView: View {
                     }
                 }) {
                     ForEach(state.accounts) { account in
-                        Text(account.name)
+                        Text(account.description)
                     }
                 }
                 
@@ -94,7 +93,7 @@ struct ContentView: View {
                     }
                 }) {
                     if let transaction = state.latestTransaction  {
-                        Text(transaction.debugDescription)
+                        Text(transaction.description)
                     }
                 }
                 
@@ -108,7 +107,23 @@ struct ContentView: View {
                     }
                 }) {
                     ForEach(state.cards) { card in
-                        Text(card.id)
+                        HStack {
+                            Text(card.description)
+                            Spacer()
+                            Text(card.enabled ? "Enabled" : "Disabled")
+                            
+                            Button {
+                                state.network
+                                    .setCards(withIDs: [card.id], toEnabled: !card.enabled)
+                                    .print("Set Cards - ")
+                                    .sink { _ in
+                                        state.fetchCards()
+                                    } receiveValue: { _ in }
+                                    .store(in: &state.cancellables)
+                            } label: {
+                                Text("Toggle")
+                            }
+                        }
                     }
                 }
             }

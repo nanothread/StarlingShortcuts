@@ -17,7 +17,7 @@ extension SCAccount {
 
 extension SCTransaction {
     convenience init(_ transaction: Transaction) {
-        self.init(identifier: transaction.id, display: transaction.debugDescription)
+        self.init(identifier: transaction.id, display: transaction.description)
         self.merchant = transaction.counterPartyName
         self.amount = INCurrencyAmount(amount: NSDecimalNumber(floatLiteral: Double(transaction.amount.minorUnits) / 100), currencyCode: transaction.amount.currency)
     }

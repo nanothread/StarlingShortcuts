@@ -189,17 +189,17 @@
 			<key>INIntentInput</key>
 			<string>enabled</string>
 			<key>INIntentKeyParameter</key>
-			<string>card</string>
+			<string>cards</string>
 			<key>INIntentLastParameterTag</key>
 			<integer>5</integer>
 			<key>INIntentManagedParameterCombinations</key>
 			<dict>
-				<key>card,enabled</key>
+				<key>cards,enabled</key>
 				<dict>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Set ${card} card ${enabled}</string>
+					<string>Set ${cards} ${enabled}</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>qqiBXf</string>
 					<key>INIntentParameterCombinationUpdatesLinked</key>
@@ -210,14 +210,14 @@
 			<string>SetCard</string>
 			<key>INIntentParameterCombinations</key>
 			<dict>
-				<key>card,enabled</key>
+				<key>cards,enabled</key>
 				<dict>
 					<key>INIntentParameterCombinationIsLinked</key>
 					<true/>
 					<key>INIntentParameterCombinationSupportsBackgroundExecution</key>
 					<true/>
 					<key>INIntentParameterCombinationTitle</key>
-					<string>Set ${card} card ${enabled}</string>
+					<string>Set ${cards} ${enabled}</string>
 					<key>INIntentParameterCombinationTitleID</key>
 					<string>BpbPZU</string>
 				</dict>
@@ -230,13 +230,13 @@
 					<key>INIntentParameterCustomDisambiguation</key>
 					<true/>
 					<key>INIntentParameterDisplayName</key>
-					<string>Card</string>
+					<string>Cards</string>
 					<key>INIntentParameterDisplayNameID</key>
 					<string>2qONey</string>
 					<key>INIntentParameterDisplayPriority</key>
 					<integer>1</integer>
 					<key>INIntentParameterName</key>
-					<string>card</string>
+					<string>cards</string>
 					<key>INIntentParameterObjectType</key>
 					<string>SCCard</string>
 					<key>INIntentParameterObjectTypeNamespace</key>
@@ -259,7 +259,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${card}’.</string>
+							<string>There are ${count} options matching ‘${cards}’.</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>VhfyOY</string>
 							<key>INIntentParameterPromptDialogType</key>
@@ -269,7 +269,7 @@
 							<key>INIntentParameterPromptDialogCustom</key>
 							<true/>
 							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${card}’?</string>
+							<string>Just to confirm, you wanted ‘${cards}’?</string>
 							<key>INIntentParameterPromptDialogFormatStringID</key>
 							<string>YaMLJl</string>
 							<key>INIntentParameterPromptDialogType</key>

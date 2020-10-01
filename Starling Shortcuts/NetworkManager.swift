@@ -61,6 +61,17 @@ class NetworkManager: ObservableObject {
             }
             .eraseToAnyPublisher()
     }
+    
+    func setCards(withIDs ids: [String], toEnabled enabled: Bool) -> AnyPublisher<Never, Error> {
+        ids.publisher
+            .flatMap {
+                self.starling
+                    .setCard(with: $0, enabled: enabled)
+            }
+            .ignoreOutput()
+            .mapError { $0 }
+            .eraseToAnyPublisher()
+    }
 }
 
 

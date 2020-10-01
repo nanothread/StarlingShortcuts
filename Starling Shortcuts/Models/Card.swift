@@ -9,7 +9,7 @@ import Foundation
 
 struct Card: Codable {
     var cardUid: String
-    var cardAssociationUid: String
+    var enabled: Bool
     var endOfCardNumber: String
 }
 

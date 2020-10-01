@@ -24,6 +24,11 @@
 		3E67BB802525300E001A2392 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB7F2525300E001A2392 /* Card.swift */; };
 		3E67BB8425253092001A2392 /* CurrencyAndAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */; };
 		3E67BB88252530CB001A2392 /* Starling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB87252530CB001A2392 /* Starling.swift */; };
+		3E67BB8B252531E8001A2392 /* Transaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB7B2525300A001A2392 /* Transaction.swift */; };
+		3E67BB8C252531E8001A2392 /* Account.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB7525253002001A2392 /* Account.swift */; };
+		3E67BB8D252531E8001A2392 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB7F2525300E001A2392 /* Card.swift */; };
+		3E67BB8E252531E8001A2392 /* CurrencyAndAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */; };
+		3E67BB91252531F5001A2392 /* Starling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB87252530CB001A2392 /* Starling.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -270,9 +275,14 @@
 			files = (
 				3E67BB712524EDC6001A2392 /* SetCardIntentHandler.swift in Sources */,
 				3E67BB572523DFBB001A2392 /* NetworkManager.swift in Sources */,
+				3E67BB8B252531E8001A2392 /* Transaction.swift in Sources */,
+				3E67BB8E252531E8001A2392 /* CurrencyAndAmount.swift in Sources */,
 				3E67BB4C25239C5E001A2392 /* Intents.intentdefinition in Sources */,
 				3E67BB4525239BB3001A2392 /* GetTransactionIntentHandler.swift in Sources */,
 				3E67BB3A25239B4A001A2392 /* IntentHandler.swift in Sources */,
+				3E67BB8C252531E8001A2392 /* Account.swift in Sources */,
+				3E67BB8D252531E8001A2392 /* Card.swift in Sources */,
+				3E67BB91252531F5001A2392 /* Starling.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -460,6 +470,7 @@
 					"@executable_path/Frameworks",
 					"@executable_path/../../Frameworks",
 				);
+				OTHER_SWIFT_FLAGS = "-Xfrontend -warn-long-expression-type-checking=500 -Xfrontend -warn-long-function-bodies=500";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.glenagon.Starling-Shortcuts.Starling-Intents";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
