@@ -32,6 +32,7 @@
 			<array/>
 			<key>IntentsSupported</key>
 			<array>
+				<string>GetStatementIntent</string>
 				<string>GetTransactionIntent</string>
 				<string>SetCardIntent</string>
 			</array>

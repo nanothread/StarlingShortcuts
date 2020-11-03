@@ -12,6 +12,7 @@
 		3E33FB552522870600166987 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E33FB542522870600166987 /* Assets.xcassets */; };
 		3E33FB582522870700166987 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3E33FB572522870700166987 /* Preview Assets.xcassets */; };
 		3E33FB612522873C00166987 /* Intents.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 3E33FB602522873C00166987 /* Intents.intentdefinition */; settings = {ATTRIBUTES = (no_codegen, ); }; };
+		3E52113825268DA700FD62BF /* GetStatementIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E52113725268DA700FD62BF /* GetStatementIntentHandler.swift */; };
 		3E67BB3A25239B4A001A2392 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB3925239B4A001A2392 /* IntentHandler.swift */; };
 		3E67BB3E25239B4A001A2392 /* Starling Intents.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = 3E67BB3725239B4A001A2392 /* Starling Intents.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		3E67BB4525239BB3001A2392 /* GetTransactionIntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB4425239BB3001A2392 /* GetTransactionIntentHandler.swift */; };
@@ -29,8 +30,9 @@
 		3E67BB8D252531E8001A2392 /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB7F2525300E001A2392 /* Card.swift */; };
 		3E67BB8E252531E8001A2392 /* CurrencyAndAmount.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */; };
 		3E67BB91252531F5001A2392 /* Starling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB87252530CB001A2392 /* Starling.swift */; };
-		3E67BB9B252631A6001A2392 /* Statement.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB9A252631A6001A2392 /* Statement.swift */; };
 		3E67BB9F252633DC001A2392 /* PDFView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3E67BB9E252633DC001A2392 /* PDFView.swift */; };
+		3ED53CC9255202C00087D2FE /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED53CC8255202C00087D2FE /* Secret.swift */; };
+		3ED53CCE255203620087D2FE /* Secret.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3ED53CC8255202C00087D2FE /* Secret.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -65,6 +67,7 @@
 		3E33FB572522870700166987 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		3E33FB592522870700166987 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E33FB602522873C00166987 /* Intents.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = Intents.intentdefinition; sourceTree = "<group>"; };
+		3E52113725268DA700FD62BF /* GetStatementIntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GetStatementIntentHandler.swift; sourceTree = "<group>"; };
 		3E67BB3725239B4A001A2392 /* Starling Intents.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "Starling Intents.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3E67BB3925239B4A001A2392 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		3E67BB3B25239B4A001A2392 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -76,8 +79,8 @@
 		3E67BB7F2525300E001A2392 /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyAndAmount.swift; sourceTree = "<group>"; };
 		3E67BB87252530CB001A2392 /* Starling.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Starling.swift; sourceTree = "<group>"; };
-		3E67BB9A252631A6001A2392 /* Statement.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statement.swift; sourceTree = "<group>"; };
 		3E67BB9E252633DC001A2392 /* PDFView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFView.swift; sourceTree = "<group>"; };
+		3ED53CC8255202C00087D2FE /* Secret.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secret.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -123,6 +126,7 @@
 				3E33FB522522870500166987 /* ContentView.swift */,
 				3E67BB9E252633DC001A2392 /* PDFView.swift */,
 				3E67BB512523DF86001A2392 /* NetworkManager.swift */,
+				3ED53CC8255202C00087D2FE /* Secret.swift */,
 				3E67BB87252530CB001A2392 /* Starling.swift */,
 				3E33FB602522873C00166987 /* Intents.intentdefinition */,
 				3E67BB7425252FF7001A2392 /* Models */,
@@ -147,6 +151,7 @@
 				3E67BB3925239B4A001A2392 /* IntentHandler.swift */,
 				3E67BB4425239BB3001A2392 /* GetTransactionIntentHandler.swift */,
 				3E67BB702524EDC6001A2392 /* SetCardIntentHandler.swift */,
+				3E52113725268DA700FD62BF /* GetStatementIntentHandler.swift */,
 				3E67BB3B25239B4A001A2392 /* Info.plist */,
 			);
 			path = "Starling Intents";
@@ -159,7 +164,6 @@
 				3E67BB7B2525300A001A2392 /* Transaction.swift */,
 				3E67BB7F2525300E001A2392 /* Card.swift */,
 				3E67BB8325253092001A2392 /* CurrencyAndAmount.swift */,
-				3E67BB9A252631A6001A2392 /* Statement.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -264,6 +268,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3E67BB7625253002001A2392 /* Account.swift in Sources */,
+				3ED53CC9255202C00087D2FE /* Secret.swift in Sources */,
 				3E67BB522523DF86001A2392 /* NetworkManager.swift in Sources */,
 				3E67BB802525300E001A2392 /* Card.swift in Sources */,
 				3E67BB7C2525300A001A2392 /* Transaction.swift in Sources */,
@@ -273,7 +278,6 @@
 				3E33FB532522870500166987 /* ContentView.swift in Sources */,
 				3E33FB512522870500166987 /* Starling_ShortcutsApp.swift in Sources */,
 				3E67BB9F252633DC001A2392 /* PDFView.swift in Sources */,
-				3E67BB9B252631A6001A2392 /* Statement.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +285,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3E52113825268DA700FD62BF /* GetStatementIntentHandler.swift in Sources */,
+				3ED53CCE255203620087D2FE /* Secret.swift in Sources */,
 				3E67BB712524EDC6001A2392 /* SetCardIntentHandler.swift in Sources */,
 				3E67BB572523DFBB001A2392 /* NetworkManager.swift in Sources */,
 				3E67BB8B252531E8001A2392 /* Transaction.swift in Sources */,
